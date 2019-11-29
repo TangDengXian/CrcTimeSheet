@@ -1,6 +1,6 @@
 package org.sang.service;
 
-import org.sang.bean.Hr;
+import org.sang.bean.User;
 import org.sang.bean.MsgContent;
 import org.sang.bean.SysMsg;
 import org.sang.common.HrUtils;
@@ -21,14 +21,14 @@ public class SysMsgService {
     @Autowired
     SysMsgMapper sysMsgMapper;
     @Autowired
-    HrService hrService;
+    UserService userService;
 
     @PreAuthorize("hasRole('ROLE_admin')")//只有管理员可以发送系统消息
     public boolean sendMsg(MsgContent msg) {
         int result = sysMsgMapper.sendMsg(msg);
-        List<Hr> allHr = hrService.getAllHr();
-        int result2 = sysMsgMapper.addMsg2AllHr(allHr, msg.getId());
-        return result2==allHr.size();
+        List<User> allUser = userService.getAllHr();
+        int result2 = sysMsgMapper.addMsg2AllHr(allUser, msg.getId());
+        return result2== allUser.size();
     }
 
     public List<SysMsg> getSysMsgByPage(Integer page, Integer size) {

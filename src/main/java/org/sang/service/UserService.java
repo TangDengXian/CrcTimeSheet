@@ -1,8 +1,8 @@
 package org.sang.service;
 
-import org.sang.bean.Hr;
+import org.sang.bean.User;
 import org.sang.common.HrUtils;
-import org.sang.mapper.HrMapper;
+import org.sang.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,55 +18,55 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class HrService implements UserDetailsService {
+public class UserService implements UserDetailsService {
 
     @Autowired
-    HrMapper hrMapper;
+    UserMapper userMapper;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        Hr hr = hrMapper.loadUserByUsername(s);
-        if (hr == null) {
+        User user = userMapper.loadUserByUsername(s);
+        if (user == null) {
             throw new UsernameNotFoundException("用户名不对");
         }
-        return hr;
+        return user;
     }
 
     public int hrReg(String username, String password) {
         //如果用户名存在，返回错误
-        if (hrMapper.loadUserByUsername(username) != null) {
+        if (userMapper.loadUserByUsername(username) != null) {
             return -1;
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String encode = encoder.encode(password);
-        return hrMapper.hrReg(username, encode);
+        return userMapper.hrReg(username, encode);
     }
 
-    public List<Hr> getHrsByKeywords(String keywords) {
-        return hrMapper.getHrsByKeywords(keywords);
+    public List<User> getHrsByKeywords(String keywords) {
+        return userMapper.getHrsByKeywords(keywords);
     }
 
-    public int updateHr(Hr hr) {
-        return hrMapper.updateHr(hr);
+    public int updateHr(User user) {
+        return userMapper.updateHr(user);
     }
 
     public int updateHrRoles(Long hrId, Long[] rids) {
-        int i = hrMapper.deleteRoleByHrId(hrId);
-        return hrMapper.addRolesForHr(hrId, rids);
+        int i = userMapper.deleteRoleByHrId(hrId);
+        return userMapper.addRolesForHr(hrId, rids);
     }
 
-    public Hr getHrById(Long hrId) {
-        return hrMapper.getHrById(hrId);
+    public User getHrById(Long hrId) {
+        return userMapper.getHrById(hrId);
     }
 
     public int deleteHr(Long hrId) {
-        return hrMapper.deleteHr(hrId);
+        return userMapper.deleteHr(hrId);
     }
 
-    public List<Hr> getAllHrExceptAdmin() {
-        return hrMapper.getAllHr(HrUtils.getCurrentHr().getId());
+    public List<User> getAllHrExceptAdmin() {
+        return userMapper.getAllHr(HrUtils.getCurrentHr().getId());
     }
-    public List<Hr> getAllHr() {
-        return hrMapper.getAllHr(null);
+    public List<User> getAllHr() {
+        return userMapper.getAllHr(null);
     }
 }

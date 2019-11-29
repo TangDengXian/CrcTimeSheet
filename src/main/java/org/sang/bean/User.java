@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by sang on 2017/12/28.
  */
-public class Hr implements UserDetails {
+public class User implements UserDetails {
     private Long id;
     private String name;
     private String phone;

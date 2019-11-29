@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.sang.mapper.HrMapper">
-    <resultMap id="BaseResultMap" type="org.sang.bean.Hr">
+<mapper namespace="org.sang.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="org.sang.bean.User">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="phone" property="phone"/>
@@ -15,11 +15,11 @@
         <result column="userface" property="userface"/>
         <result column="remark" property="remark"/>
     </resultMap>
-    <resultMap id="lazyLoadRoles" type="org.sang.bean.Hr" extends="BaseResultMap">
-        <collection property="roles" ofType="org.sang.bean.Role" select="org.sang.mapper.HrMapper.getRolesByHrId"
+    <resultMap id="lazyLoadRoles" type="org.sang.bean.User" extends="BaseResultMap">
+        <collection property="roles" ofType="org.sang.bean.Role" select="org.sang.mapper.UserMapper.getRolesByHrId"
                     column="id"></collection>
     </resultMap>
-    <resultMap id="eagerLoadRoles" type="org.sang.bean.Hr" extends="BaseResultMap">
+    <resultMap id="eagerLoadRoles" type="org.sang.bean.User" extends="BaseResultMap">
         <collection property="roles" ofType="org.sang.bean.Role">
             <id property="id" column="rid"/>
             <result property="name" column="rname"/>
@@ -27,29 +27,29 @@
         </collection>
     </resultMap>
     <select id="loadUserByUsername" resultMap="lazyLoadRoles">
-        select * from hr WHERE username=#{username};
+        select * from user WHERE username=#{username};
     </select>
     <select id="getRolesByHrId" resultType="org.sang.bean.Role">
-        SELECT r.* FROM hr_role h,role r where h.rid=r.id AND h.hrid=#{id}
+        SELECT r.* FROM user_role h,role r where h.rid=r.id AND h.hrid=#{id}
     </select>
     <insert id="hrReg">
-        INSERT INTO hr set username=#{username},password=#{password}
+        INSERT INTO user set username=#{username},password=#{password}
     </insert>
     <select id="getHrsByKeywords" resultMap="eagerLoadRoles">
-        select h.*,`r`.`id` AS `rid`,`r`.`name` AS `rname`,`r`.`nameZh` AS `rnameZh` from ((`hr` `h` left join `hr_role`
+        select h.*,`r`.`id` AS `rid`,`r`.`name` AS `rname`,`r`.`nameZh` AS `rnameZh` from ((`user` `h` left join `user_role`
         `h_r` on ((`h`.`id` = `h_r`.`hrid`))) left join `role` `r` on ((`h_r`.`rid` = `r`.`id`))) where h.`id` not
-        in(select h_r.`hrid` from hr_role h_r,role r where h_r.`rid`=r.`id` and r.`nameZh`='系统管理员')
+        in(select h_r.`hrid` from user_role h_r,role r where h_r.`rid`=r.`id` and r.`nameZh`='系统管理员')
         <if test="keywords!='all' and keywords!=''">
             and h.`name` like concat('%',#{keywords},'%')
         </if>
         order by h.`id` limit 10
     </select>
     <select id="getHrById" resultMap="eagerLoadRoles">
-        select h.*,`r`.`id` AS `rid`,`r`.`name` AS `rname`,`r`.`nameZh` AS `rnameZh` from ((`hr` `h` left join `hr_role`
+        select h.*,`r`.`id` AS `rid`,`r`.`name` AS `rname`,`r`.`nameZh` AS `rnameZh` from ((`user` `h` left join `user_role`
         `h_r` on ((`h`.`id` = `h_r`.`hrid`))) left join `role` `r` on ((`h_r`.`rid` = `r`.`id`))) where h.`id`=#{hrId}
     </select>
-    <update id="updateHr" parameterType="org.sang.bean.Hr">
-        update hr
+    <update id="updateHr" parameterType="org.sang.bean.User">
+        update user
         <set>
             <if test="name != null">
                 name = #{name,jdbcType=VARCHAR},
@@ -82,19 +82,19 @@
         where id = #{id}
     </update>
     <delete id="deleteRoleByHrId" parameterType="Long">
-        DELETE FROM hr_role where hrid=#{hrId}
+        DELETE FROM user_role where hrid=#{hrId}
     </delete>
     <insert id="addRolesForHr">
-        INSERT INTO hr_role(hrid,rid) VALUES
+        INSERT INTO user_role(hrid,rid) VALUES
         <foreach collection="rids" separator="," item="rid">
             (#{hrId},#{rid})
         </foreach>
     </insert>
     <delete id="deleteHr" parameterType="Long">
-        DELETE FROM hr WHERE id=#{hrId}
+        DELETE FROM user WHERE id=#{hrId}
     </delete>
-    <select id="getAllHr" resultType="org.sang.bean.Hr">
-        select * from hr
+    <select id="getAllHr" resultType="org.sang.bean.User">
+        select * from user
         <if test="currentId!=null">
             WHERE id !=#{currentId}
         </if>

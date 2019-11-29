@@ -3,7 +3,7 @@ package org.sang.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.sang.bean.RespBean;
 import org.sang.common.HrUtils;
-import org.sang.service.HrService;
+import org.sang.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.*;
@@ -36,7 +36,7 @@ import java.io.PrintWriter;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    HrService hrService;
+    UserService userService;
     @Autowired
     CustomMetadataSource metadataSource;
     @Autowired
@@ -46,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(hrService)
+        auth.userDetailsService(userService)
                 .passwordEncoder(new BCryptPasswordEncoder());
     }
 

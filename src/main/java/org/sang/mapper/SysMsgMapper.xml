@@ -8,8 +8,8 @@
     </insert>
     <insert id="addMsg2AllHr">
         INSERT INTO sysmsg(mid,hrid) VALUES
-        <foreach collection="hrs" item="hr" separator=",">
-            (#{mid},#{hr.id})
+        <foreach collection="users" item="user" separator=",">
+            (#{mid},#{user.id})
         </foreach>
     </insert>
     <select id="getSysMsg" resultMap="BaseResultMap">

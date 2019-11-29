@@ -1,10 +1,10 @@
 package org.sang.controller;
 
-import org.sang.bean.Hr;
+import org.sang.bean.User;
 import org.sang.bean.MsgContent;
 import org.sang.bean.RespBean;
 import org.sang.bean.SysMsg;
-import org.sang.service.HrService;
+import org.sang.service.UserService;
 import org.sang.service.SysMsgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,13 +22,13 @@ import java.util.List;
 @RequestMapping("/chat")
 public class ChatController {
     @Autowired
-    HrService hrService;
+    UserService userService;
     @Autowired
     SysMsgService sysMsgService;
 
     @RequestMapping(value = "/hrs", method = RequestMethod.GET)
-    public List<Hr> getAllHr() {
-        return hrService.getAllHrExceptAdmin();
+    public List<User> getAllHr() {
+        return userService.getAllHrExceptAdmin();
     }
 
     @RequestMapping(value = "/nf", method = RequestMethod.POST)

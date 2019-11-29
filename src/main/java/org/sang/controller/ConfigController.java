@@ -1,6 +1,6 @@
 package org.sang.controller;
 
-import org.sang.bean.Hr;
+import org.sang.bean.User;
 import org.sang.bean.Menu;
 import org.sang.common.HrUtils;
 import org.sang.service.MenuService;
@@ -25,7 +25,7 @@ public class ConfigController {
     }
 
     @RequestMapping("/hr")
-    public Hr currentUser() {
+    public User currentUser() {
         return HrUtils.getCurrentHr();
     }
 }
