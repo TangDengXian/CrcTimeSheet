@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sang.mapper.CenlendarMapper">
+    <resultMap id="BaseResultMap" type="org.sang.bean.Cenlendar">
+        <id column="DATE" jdbcType="DATE" property="date"/>
+        <result column="STATUS" jdbcType="INTEGER" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    DATE, STATUS
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.util.Date" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from CENLENDAR
+        where DATE = #{date,jdbcType=DATE}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.util.Date">
+    delete from CENLENDAR
+    where DATE = #{date,jdbcType=DATE}
+  </delete>
+    <insert id="insert" parameterType="org.sang.bean.Cenlendar">
+    replace into CENLENDAR (DATE, STATUS)
+    values (#{date,jdbcType=DATE}, #{status,jdbcType=INTEGER})
+  </insert>
+</mapper>
