@@ -17,7 +17,7 @@ import java.util.List;
  * Created by sang on 2018/1/2.
  */
 @RestController
-@RequestMapping("/system/hr")
+@RequestMapping("/system/user")
 public class SystemUserController {
     @Autowired
     UserService userService;
