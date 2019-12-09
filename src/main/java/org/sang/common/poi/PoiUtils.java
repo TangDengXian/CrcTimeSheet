@@ -38,7 +38,7 @@ public class PoiUtils {
             //3.2设置文档管理员
             dsi.setManager("江南一点雨");
             //3.3设置组织机构
-            dsi.setCompany("XXX集团");
+            dsi.setCompany("得逸信息-华润集团项目组");
             //4.获取摘要信息并配置
             SummaryInformation si = workbook.getSummaryInformation();
             //4.1设置文档主题
@@ -46,11 +46,11 @@ public class PoiUtils {
             //4.2.设置文档标题
             si.setTitle("员工信息");
             //4.3 设置文档作者
-            si.setAuthor("XXX集团");
+            si.setAuthor("得逸信息-华润集团项目组");
             //4.4设置文档备注
             si.setComments("备注信息暂无");
             //创建Excel表单
-            HSSFSheet sheet = workbook.createSheet("XXX集团员工信息表");
+            HSSFSheet sheet = workbook.createSheet("得逸信息-华润集团项目组员工信息表");
             //创建日期显示格式
             HSSFCellStyle dateCellStyle = workbook.createCellStyle();
             dateCellStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));

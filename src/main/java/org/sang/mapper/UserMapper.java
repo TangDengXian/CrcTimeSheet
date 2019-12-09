@@ -16,6 +16,8 @@ public interface UserMapper {
 
     int hrReg(@Param("username") String username, @Param("password") String password);
 
+    int hrReg2(User user);
+
     List<User> getHrsByKeywords(@Param("keywords") String keywords);
 
     int updateHr(User user);

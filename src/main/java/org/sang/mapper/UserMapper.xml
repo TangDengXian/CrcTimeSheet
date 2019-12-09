@@ -35,6 +35,10 @@
     <insert id="hrReg">
         INSERT INTO user set username=#{username},password=#{password}
     </insert>
+    <insert id="hrReg2" parameterType="org.sang.bean.User">
+        INSERT INTO user set username=#{username},password=#{password},
+        name = #{name,jdbcType=VARCHAR},phone = #{phone,jdbcType=CHAR},address = #{address,jdbcType=VARCHAR},remark = #{remark,jdbcType=VARCHAR}
+    </insert>
     <select id="getHrsByKeywords" resultMap="eagerLoadRoles">
         select h.*,`r`.`id` AS `rid`,`r`.`name` AS `rname`,`r`.`nameZh` AS `rnameZh` from ((`user` `h` left join `user_role`
         `h_r` on ((`h`.`id` = `h_r`.`hrid`))) left join `role` `r` on ((`h_r`.`rid` = `r`.`id`))) where h.`id` not
@@ -81,6 +85,7 @@
         </set>
         where id = #{id}
     </update>
+
     <delete id="deleteRoleByHrId" parameterType="Long">
         DELETE FROM user_role where hrid=#{hrId}
     </delete>

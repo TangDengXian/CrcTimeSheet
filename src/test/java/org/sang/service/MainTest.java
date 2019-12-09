@@ -5,10 +5,13 @@ import org.junit.Before;
 import org.junit.After;
 import org.junit.runner.RunWith;
 import org.sang.bean.Cenlendar;
+import org.sang.bean.User;
 import org.sang.mapper.CenlendarMapper;
+import org.sang.mapper.UserMapper;
 import org.sang.utils.HolidayUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -42,7 +45,15 @@ public class MainTest {
     @Test
     @Rollback(false)
     public void main() throws Exception {
-        initCenlendar("20180727");
+        //initCenlendar("20180727");
+        User user = new User();
+        user.setName("曹绪才");
+        user.setPassword("handhand");
+        user.setPhone("");
+        user.setEnabled(true);
+        user.setUsername("4821");
+        user.setUserface("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517070040185&di=be0375e0c3db6c311b837b28c208f318&imgtype=0&src=http%3A%2F%2Fimg2.soyoung.com%2Fpost%2F20150213%2F6%2F20150213141918532.jpg");
+        register(user);
     }
 
     void initCenlendar(String firstDate) throws InterruptedException {
@@ -72,13 +83,29 @@ public class MainTest {
             Cenlendar cenlendar = new Cenlendar();
             cenlendar.setDate(first);
             cenlendar.setStatus(new Integer(result));
-
             cenlendarMapper.insert(cenlendar);
 
             firstCalendar.add(firstCalendar.DATE, 1);// 把日期往后增加一天.整数往后推,负数往前移动
             first = firstCalendar.getTime(); // 这个时间就是日期往后推一天的结果
             Thread.sleep(1000l);
         }
+    }
+
+    @Autowired
+    UserMapper userMapper;
+
+    void register(User user) {
+        User user2 = userMapper.loadUserByUsername(user.getUsername());
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encode = encoder.encode(user.getPassword());
+        user.setPassword(encode);
+        if (user2 != null) {
+            //修改密码
+            user.setId(user2.getId());
+            userMapper.updateHr(user);
+            return;
+        }
+        userMapper.hrReg2(user);
     }
 
 

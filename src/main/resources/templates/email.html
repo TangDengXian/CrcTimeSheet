@@ -6,31 +6,29 @@
 </head>
 <body>
 <p>你好，
-    <span th:text="${name}"></span>童鞋，欢迎加入XXX大家庭！您的入职信息如下：</p>
+    <span th:text="${name}"></span>童鞋，欢迎加入华润集团项目组大家庭！：
+</p>
+
+<p>
+    以下是入场信息，请仔细阅读顾问指南,在报到时间赶到报到地点，并联系现场管理人员。
+</p>
+
 <table border="1" cellspacing="0">
     <tr>
         <td><strong style="color: #F00">工号</strong></td>
         <td th:text="${workID}"></td>
     </tr>
     <tr>
-        <td><strong style="color: #F00">合同期限</strong></td>
-        <td th:text="${contractTerm}+'年'"></td>
+        <td><strong style="color: #F00">报到时间</strong></td>
+        <td th:text="${#dates.format(beginContract, 'yyyy-MM-dd HH:mm')}"></td>
     </tr>
     <tr>
-        <td><strong style="color: #F00">合同起始日期</strong></td>
-        <td th:text="${#dates.format(beginContract, 'yyyy-MM-dd')}"></td>
+        <td><strong style="color: #F00">报到地点</strong></td>
+        <td th:text="深圳市南山区龙珠四路方大城T2座22层"></td>
     </tr>
     <tr>
-        <td><strong style="color: #F00">合同截至日期</strong></td>
-        <td th:text="${#dates.format(endContract, 'yyyy-MM-dd')}"></td>
-    </tr>
-    <tr>
-        <td><strong style="color: #F00">所属部门</strong></td>
-        <td th:text="${departmentName}"></td>
-    </tr>
-    <tr>
-        <td><strong style="color: #F00">职位</strong></td>
-        <td th:text="${posName}"></td>
+        <td><strong style="color: #F00">得逸顾问指南</strong></td>
+        <td><href>https://docs.qq.com/doc/DQWJ1UHBOa2NKTGFs</href></td>
     </tr>
 </table>
 <p>

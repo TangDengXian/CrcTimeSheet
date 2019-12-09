@@ -20,12 +20,13 @@ public class EmailRunnable implements Runnable {
 
     public EmailRunnable(Employee employee,
                          JavaMailSender javaMailSender,
-                         TemplateEngine templateEngine,String emailAddress) {
+                         TemplateEngine templateEngine, String emailAddress) {
         this.employee = employee;
         this.javaMailSender = javaMailSender;
         this.templateEngine = templateEngine;
         this.emailAddress = emailAddress;
     }
+
     @Override
     public void run() {
         try {
@@ -33,7 +34,7 @@ public class EmailRunnable implements Runnable {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setTo(employee.getEmail());
             helper.setFrom(emailAddress);
-            helper.setSubject("XXX集团：通知");
+            helper.setSubject("得逸信息-华润集团项目组：通知");
             Context ctx = new Context();
             ctx.setVariable("name", employee.getName());
             ctx.setVariable("workID", employee.getWorkID());
